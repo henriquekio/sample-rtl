@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
 
 function App() {
+  const [listTech, setListTech] = useState([])
+  const [newTech, setNewTech] = useState('')
+
+  const handleSubmit = event => {
+    setListTech([...listTech, newTech])
+    setNewTech('')
+
+    event.preventDefault()
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ul data-testid='list-tech'>
+        {listTech.map(tech => <li key={tech}>{tech}</li>)}
+      </ul>
+      <form onSubmit={handleSubmit} data-testid='form-tech' >
+        <label htmlFor="newTech">New Tech</label>
+        <input id='newTech' value={newTech} onChange={e => setNewTech(e.target.value)} type="text"/>
+      </form>
     </div>
   );
 }
